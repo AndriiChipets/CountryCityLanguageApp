@@ -18,4 +18,5 @@ public class CountryDaoImpl implements CountryDao {
                 .createQuery("select c from Country c join fetch c.languages", Country.class);
         return query.list();
     }
+
 }

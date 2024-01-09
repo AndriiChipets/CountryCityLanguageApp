@@ -9,4 +9,6 @@ public interface CityDao {
     List<City> getItems(int offset, int limit);
 
     int getTotalCount();
+
+    City getById(Integer id);
 }

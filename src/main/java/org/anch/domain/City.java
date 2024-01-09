@@ -29,9 +29,4 @@ public class City {
     @JoinColumn(name = "country_id", nullable = false)
     private Country country;
 
-//    @EqualsAndHashCode.Exclude
-//    @ToString.Exclude
-//    @OneToOne(fetch = FetchType.LAZY, mappedBy = "capitalCity")
-//    private Country capitalCountry;
-
 }

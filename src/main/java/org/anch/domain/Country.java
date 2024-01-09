@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.Type;
 
+import java.math.BigDecimal;
 import java.util.Set;
 
 @Entity
@@ -22,7 +23,7 @@ public class Country {
     private String code;
 
     @Column(name = "code_2", nullable = false, length = 2, columnDefinition = "varchar default ''")
-    private String code2;
+    private String alternativeCode;
 
     @Column(name = "name", nullable = false, length = 52, columnDefinition = "varchar default ''")
     private String name;
@@ -38,8 +39,7 @@ public class Country {
     private String region;
 
     @Column(name = "surface_area", nullable = false, columnDefinition = "decimal(10,2) default 0.00")
-    @Type(type = "org.hibernate.type.DoubleType")
-    private Double surfaceArea;
+    private BigDecimal surfaceArea;
 
     @Column(name = "indep_year")
     private Short indepYear;
@@ -48,16 +48,13 @@ public class Country {
     private Integer population;
 
     @Column(name = "life_expectancy", columnDefinition = "decimal(3,1)")
-    @Type(type = "org.hibernate.type.DoubleType")
-    private Double lifeExpectancy;
+    private BigDecimal lifeExpectancy;
 
     @Column(name = "gnp", columnDefinition = "decimal(10,2)")
-    @Type(type = "org.hibernate.type.DoubleType")
-    private Double gnp;
+    private BigDecimal gnp;
 
     @Column(name = "gnpo_id", columnDefinition = "decimal(10,2)")
-    @Type(type = "org.hibernate.type.DoubleType")
-    private Double gnpoId;
+    private BigDecimal gnpoId;
 
     @Column(name = "local_name", nullable = false, length = 45, columnDefinition = "varchar default ''")
     private String localName;

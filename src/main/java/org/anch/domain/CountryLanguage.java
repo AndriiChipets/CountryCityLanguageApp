@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Type;
 
+import java.math.BigDecimal;
+
 @Entity
 @Table(name = "country_language", catalog = "world")
 @NoArgsConstructor
@@ -28,8 +30,7 @@ public class CountryLanguage {
     private Boolean isOfficial;
 
     @Column(name = "percentage", columnDefinition = "decimal(4,1) default '0.0'")
-    @Type(type = "org.hibernate.type.DoubleType")
-    private Double percentage;
+    private BigDecimal percentage;
 
     @ManyToOne
     @JoinColumn(name = "country_id", nullable = false)
