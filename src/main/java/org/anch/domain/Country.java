@@ -2,7 +2,6 @@ package org.anch.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.Type;
 
 import java.math.BigDecimal;
 import java.util.Set;
@@ -28,7 +27,6 @@ public class Country {
     @Column(name = "name", nullable = false, length = 52, columnDefinition = "varchar default ''")
     private String name;
 
-
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "continent", nullable = false,
             columnDefinition = "int default '0', " +
@@ -42,7 +40,7 @@ public class Country {
     private BigDecimal surfaceArea;
 
     @Column(name = "indep_year")
-    private Short indepYear;
+    private Short independenceYear;
 
     @Column(name = "population", nullable = false, columnDefinition = "int default '0'")
     private Integer population;

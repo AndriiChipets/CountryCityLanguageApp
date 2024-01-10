@@ -40,4 +40,5 @@ public class SessionFactoryCreator implements AutoCloseable {
     public void close() throws Exception {
         instance.close();
     }
+
 }

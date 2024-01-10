@@ -10,4 +10,5 @@ public class EntityScanner {
         Reflections reflections = new Reflections("org.anch.domain");
         return reflections.getTypesAnnotatedWith(Entity.class);
     }
+
 }

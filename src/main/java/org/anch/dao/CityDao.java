@@ -11,4 +11,5 @@ public interface CityDao {
     int getTotalCount();
 
     City getById(Integer id);
+
 }
