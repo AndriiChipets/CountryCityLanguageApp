@@ -18,14 +18,9 @@ public class CountryDaoImpl implements CountryDao {
 
     public List<Country> getAll() {
 
-        List<Country> countries;
-        try (Session session = sessionFactory.getCurrentSession()) {
-            Transaction transaction = session.beginTransaction();
-            Query<Country> query = session.createQuery(FIND_ALL_COUNTRIES_QUERY, Country.class);
-            countries = query.list();
-            transaction.commit();
-        }
-        return countries;
+        Query<Country> query = sessionFactory.getCurrentSession().createQuery(FIND_ALL_COUNTRIES_QUERY, Country.class);
+
+        return query.list();
     }
 
 }

@@ -30,7 +30,7 @@ public class FrontController {
     private final ObjectMapper mapper = new ObjectMapper();
     private final RedisClient redisClient = RedisClientCreator.prepareRedisClient();
     private final ApplicationService applicationService = new ApplicationServiceImpl(
-            cityDao, countryDao, mapper, redisClient
+            cityDao, countryDao, mapper, redisClient, sessionFactory
     );
 
     public void compareDataBasesSpeed() {
@@ -56,6 +56,7 @@ public class FrontController {
     }
 
     private void shutdown() {
+
         if (nonNull(sessionFactory)) {
             sessionFactory.close();
         }

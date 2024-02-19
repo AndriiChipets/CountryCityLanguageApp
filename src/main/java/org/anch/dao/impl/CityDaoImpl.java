@@ -21,41 +21,25 @@ public class CityDaoImpl implements CityDao {
 
     public List<City> getItems(int offset, int limit) {
 
-        List<City> cities;
-        try (Session session = sessionFactory.getCurrentSession()) {
-            Transaction transaction = session.beginTransaction();
-            Query<City> query = session.createQuery(FIND_ALL_CITIES_QUERY, City.class);
-            query.setFirstResult(offset);
-            query.setMaxResults(limit);
-            cities = query.list();
-            transaction.commit();
-        }
-        return cities;
+        Query<City> query = sessionFactory.getCurrentSession().createQuery(FIND_ALL_CITIES_QUERY, City.class);
+        query.setFirstResult(offset);
+        query.setMaxResults(limit);
+
+        return query.list();
     }
 
     public int getTotalCount() {
 
-        int totalCount;
-        try (Session session = sessionFactory.getCurrentSession()) {
-            Transaction transaction = session.beginTransaction();
-            Query<Long> query = session.createQuery(GET_TOTAL_COUNT_QUERY, Long.class);
-            totalCount = Math.toIntExact(query.uniqueResult());
-            transaction.commit();
-        }
-        return totalCount;
+        Query<Long> query = sessionFactory.getCurrentSession().createQuery(GET_TOTAL_COUNT_QUERY, Long.class);
+
+        return Math.toIntExact(query.uniqueResult());
     }
 
     public City getById(Integer id) {
 
-        City city;
-        try (Session session = sessionFactory.getCurrentSession()) {
-            Transaction transaction = session.beginTransaction();
-            Query<City> query = session.createQuery(FIND_CITY_BY_ID_QUERY, City.class);
-            query.setParameter("id", id);
-            city = query.getSingleResult();
-            transaction.commit();
-        }
-        return city;
-    }
+        Query<City> query = sessionFactory.getCurrentSession().createQuery(FIND_CITY_BY_ID_QUERY, City.class);
+        query.setParameter("id", id);
 
+        return query.getSingleResult();
+    }
 }

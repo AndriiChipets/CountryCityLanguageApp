@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 public class MapperCityCountry {
 
     public static List<CityCountry> transformData(List<City> cities) {
+
         return cities.stream().map(city -> {
             CityCountry cityCountry = new CityCountry();
             cityCountry.setId(city.getId());
@@ -29,11 +30,13 @@ public class MapperCityCountry {
             cityCountry.setCountryRegion(country.getRegion());
             cityCountry.setCountrySurfaceArea(country.getSurfaceArea());
             Set<CountryLanguage> countryLanguages = country.getLanguages();
+
             Set<Language> languages = countryLanguages.stream().map(cl -> {
                 Language language = new Language();
                 language.setLanguage(cl.getLanguage());
                 language.setIsOfficial(cl.getIsOfficial());
                 language.setPercentage(cl.getPercentage());
+
                 return language;
             }).collect(Collectors.toSet());
             cityCountry.setLanguages(languages);

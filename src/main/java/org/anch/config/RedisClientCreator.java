@@ -25,7 +25,7 @@ public class RedisClientCreator implements AutoCloseable {
     }
 
     @Override
-    public void close() throws Exception {
+    public void close() {
         instance.close();
     }
 

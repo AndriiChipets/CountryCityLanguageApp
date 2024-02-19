@@ -13,6 +13,8 @@ import org.anch.domain.City;
 import org.anch.domain.Country;
 import org.anch.domain.CountryLanguage;
 import org.anch.redis.CityCountry;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,25 +27,33 @@ public class ApplicationServiceImpl implements ApplicationService {
     private final CountryDao countryDao;
     private final ObjectMapper mapper;
     private final RedisClient redisClient;
+    private final SessionFactory sessionFactory;
 
     @Transactional
     @Override
     public List<City> fetchData() {
 
-        List<City> allCities = new ArrayList<>();
+        try (Session session = sessionFactory.getCurrentSession()) {
+            List<City> allCities = new ArrayList<>();
+            session.beginTransaction();
 
-        List<Country> countries = countryDao.getAll();
+            /* The List<Country> countries are invoked to reduce the number of requests to DB to get List<City>
+           from method cityDao.getItems(i, step) */
+            List<Country> countries = countryDao.getAll();
 
-        int totalCount = cityDao.getTotalCount();
-        int step = 500;
-        for (int i = 0; i < totalCount; i += step) {
-            allCities.addAll(cityDao.getItems(i, step));
+            int totalCount = cityDao.getTotalCount();
+            int step = 500;
+            for (int i = 0; i < totalCount; i += step) {
+                allCities.addAll(cityDao.getItems(i, step));
+            }
+            session.getTransaction().commit();
+            return allCities;
         }
-        return allCities;
     }
 
     @Override
     public void pushToRedis(List<CityCountry> data) {
+
         try (StatefulRedisConnection<String, String> connection = redisClient.connect()) {
             RedisStringCommands<String, String> sync = connection.sync();
             for (CityCountry cityCountry : data) {
@@ -58,6 +68,7 @@ public class ApplicationServiceImpl implements ApplicationService {
 
     @Override
     public void testRedisData(List<Integer> ids) {
+
         try (StatefulRedisConnection<String, String> connection = redisClient.connect()) {
             RedisStringCommands<String, String> sync = connection.sync();
             for (Integer id : ids) {
@@ -71,13 +82,16 @@ public class ApplicationServiceImpl implements ApplicationService {
         }
     }
 
-    @Transactional
     @Override
     public void testMysqlData(List<Integer> ids) {
-        for (Integer id : ids) {
-            City city = cityDao.getById(id);
-            Set<CountryLanguage> languages = city.getCountry().getLanguages();
+
+        try (Session session = sessionFactory.getCurrentSession()) {
+            session.beginTransaction();
+            for (Integer id : ids) {
+                City city = cityDao.getById(id);
+                Set<CountryLanguage> languages = city.getCountry().getLanguages();
+            }
+            session.getTransaction().commit();
         }
     }
-
 }

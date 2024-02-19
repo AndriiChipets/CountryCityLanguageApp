@@ -65,11 +65,6 @@ public class Country {
 
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    @OneToMany(mappedBy = "country")
-    private Set<City> cities;
-
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
     @OneToMany(mappedBy = "country", fetch = FetchType.EAGER)
     private Set<CountryLanguage> languages;
 
