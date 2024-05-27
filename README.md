@@ -1,3 +1,10 @@
-In this project, I emphasize the program structure implementation.
-There are DAO, Service, and Controller Layers in this program.
-Everything else works as expected according to the template from the task.
+# Introduction
+This is an application created to compare the performance of the usage of MySql and Redis databases.
+
+# Technologies Used
+- Java 17
+- Hibernate
+- MySQL DB
+- Redis
+- Docker
+- Lombok
